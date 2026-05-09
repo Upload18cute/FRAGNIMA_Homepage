@@ -77,21 +77,26 @@ export default function Hero() {
   /* macOS: trigger installer + uninstaller downloads sequentially */
   const onMacDownload = (e: RMouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
-    const urls = [
+    const trigger = (url: string, filename: string) => {
+      const a = document.createElement('a')
+      a.href = url
+      a.download = filename
+      a.style.display = 'none'
+      document.body.appendChild(a)
+      a.click()
+      setTimeout(() => a.remove(), 100)
+    }
+    /* fire 1st within the user-gesture stack, 2nd after a clear gap */
+    trigger(
       'https://github.com/Upload18cute/FRAGNIMA_Homepage/releases/latest/download/FRAGNIMA-macOS.pkg',
-      'https://github.com/Upload18cute/FRAGNIMA_Homepage/releases/latest/download/FRAGNIMA-macOS-Uninstaller.pkg',
-    ]
-    urls.forEach((url, i) => {
-      setTimeout(() => {
-        const a = document.createElement('a')
-        a.href = url
-        a.download = ''
-        a.style.display = 'none'
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-      }, i * 200)
-    })
+      'FRAGNIMA-macOS.pkg',
+    )
+    setTimeout(() => {
+      trigger(
+        'https://github.com/Upload18cute/FRAGNIMA_Homepage/releases/latest/download/FRAGNIMA-macOS-Uninstaller.pkg',
+        'FRAGNIMA-macOS-Uninstaller.pkg',
+      )
+    }, 1000)
   }
 
   useEffect(() => {
