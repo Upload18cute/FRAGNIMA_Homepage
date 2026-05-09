@@ -1,0 +1,26 @@
+{
+  "name": "FRAGNIMA_Homepage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "homepage": "https://Upload18cute.github.io/FRAGNIMA_Homepage/",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "gh-pages": "^6.3.0",
+    "typescript": "^5.5.3",
+    "vite": "^8.0.11"
+  },
+  "private": true,
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  }
+}

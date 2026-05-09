@@ -1,0 +1,490 @@
+/* ── Hero ──────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 64px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Background layer — receives bokeh blur (UI/text stays sharp) */
+.bgLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  filter:
+    blur(calc(var(--bokeh, 0) * 10px))
+    brightness(calc(1 + var(--bokeh, 0) * 0.05));
+  transition: filter 0.22s ease-out;
+}
+
+/* Dark overlay — purple tinted like Arcaea */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(5, 3, 16, 0.20) 0%,
+      rgba(8, 4, 22, 0.08) 30%,
+      rgba(6, 3, 18, 0.10) 60%,
+      rgba(5, 3, 16, 0.28) 100%
+    );
+  z-index: 0;
+}
+
+/* Diagonal lines (Arcaea style) */
+.diagLines {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.diagLines::before,
+.diagLines::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent 0px,
+    transparent 60px,
+    rgba(120, 80, 200, 0.03) 60px,
+    rgba(120, 80, 200, 0.03) 61px
+  );
+}
+.diagLines::after {
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0px,
+    transparent 80px,
+    rgba(120, 80, 200, 0.025) 80px,
+    rgba(120, 80, 200, 0.025) 81px
+  );
+}
+
+/* Sine wave background */
+.wavesBg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+.wave1, .wave2, .wave3 {
+  position: absolute;
+  left: 0;
+  width: 200%;
+  height: 60px;
+  top: var(--wave-top, 41%);
+  transform: translateY(-50%);
+}
+.wave1 {
+  animation: waveDrift1 10s linear infinite;
+}
+.wave2 {
+  animation: waveDrift2 6s linear infinite;
+}
+.wave3 {
+  animation: waveDrift3 4s linear infinite reverse;
+}
+@keyframes waveDrift1 {
+  from { transform: translateX(0)    translateY(-50%); }
+  to   { transform: translateX(-50%) translateY(-50%); }
+}
+@keyframes waveDrift2 {
+  from { transform: translateX(0)    translateY(-50%); }
+  to   { transform: translateX(-50%) translateY(-50%); }
+}
+@keyframes waveDrift3 {
+  from { transform: translateX(0)    translateY(-50%); }
+  to   { transform: translateX(-50%) translateY(-50%); }
+}
+
+/* Signature */
+.signatureLink {
+  position: absolute;
+  bottom: 36px;
+  right: 52px;
+  display: block;
+  z-index: 3;
+  transition: opacity 0.2s, transform 0.2s;
+  opacity: 0.52;
+}
+.signatureLink:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+.signature {
+  display: block;
+  width: 88px;
+  mix-blend-mode: screen;
+}
+
+/* HUD corners */
+.corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  z-index: 3;
+}
+.tl { top: 28px;    left: 28px;  border-top:    1px solid rgba(180,150,255,0.5); border-left:   1px solid rgba(180,150,255,0.5); }
+.tr { top: 28px;    right: 28px; border-top:    1px solid rgba(180,150,255,0.5); border-right:  1px solid rgba(180,150,255,0.5); }
+.bl { bottom: 28px; left: 28px;  border-bottom: 1px solid rgba(180,150,255,0.5); border-left:   1px solid rgba(180,150,255,0.5); }
+.br { bottom: 28px; right: 28px; border-bottom: 1px solid rgba(180,150,255,0.5); border-right:  1px solid rgba(180,150,255,0.5); }
+
+/* ── Inner ─────────────────────────────────────── */
+.inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 80px;
+  max-width: 1160px;
+  width: 100%;
+}
+
+/* ── Copy ──────────────────────────────────────── */
+.copy {
+  flex: 1;
+  max-width: 540px;
+}
+
+/* Badge  ────◆ text ◆──── */
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.badgeLine {
+  flex: 0 0 32px;
+  height: 1px;
+  background: rgba(180, 150, 255, 0.45);
+}
+.badgeDiamond {
+  width: 6px; height: 6px;
+  background: var(--lavender);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+  box-shadow: 0 0 8px var(--lavender);
+}
+.badgeText {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  color: var(--lavender);
+  white-space: nowrap;
+}
+
+/* Logo */
+.logo {
+  display: block;
+  width: 100%;
+  max-width: 440px;
+  margin-bottom: 14px;
+}
+
+.sub {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--purple);
+  opacity: 0.85;
+  margin-bottom: 22px;
+}
+
+.desc {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--text-2);
+  margin-bottom: 44px;
+  max-width: 420px;
+}
+
+/* CTAs */
+.ctas {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+/* Primary — pointed-ends pill (Arcaea style) */
+.ctaPrimary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 40px;
+  background: rgba(100, 70, 180, 0.22);
+  clip-path: polygon(16px 0%, calc(100% - 16px) 0%, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0% 50%);
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--pale);
+  backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
+}
+/* gradient border via pseudo */
+.ctaPrimary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  clip-path: inherit;
+  background: linear-gradient(
+    90deg,
+    rgba(200, 170, 255, 0.5) 0%,
+    rgba(160, 120, 240, 0.2) 50%,
+    rgba(200, 170, 255, 0.5) 100%
+  );
+  z-index: -1;
+}
+.ctaPrimary::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  clip-path: polygon(
+    calc(16px - 1px) 0%,
+    calc(100% - 15px) 0%,
+    100% 50%,
+    calc(100% - 15px) 100%,
+    calc(16px - 1px) 100%,
+    0% 50%
+  );
+  background: rgba(8, 4, 28, 0.75);
+  z-index: -1;
+}
+.ctaPrimary:hover {
+  background: rgba(130, 90, 210, 0.35);
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 16px rgba(150, 100, 255, 0.5));
+}
+
+.ctaGhost {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text-2);
+  transition: color 0.2s;
+}
+.ctaGhost:hover { color: var(--lavender); }
+
+/* Hero download group */
+.dlGroup { display: flex; flex-direction: column; gap: 1px; }
+
+.dlCards {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.5px;
+}
+.dlCards > :nth-child(2) {
+  margin-left: -11px;
+}
+
+.dlCard {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 28px;
+  background: rgb(130 102 212 / 0.35);
+  isolation: isolate;
+  color: var(--text-1);
+  transition: filter 0.25s;
+  overflow: hidden;
+  filter: drop-shadow(0 4px 18px rgba(90, 55, 200, 0.40));
+}
+/* inner content layer — creates 1px border-following-clip-path */
+.dlCard::before {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  clip-path: inherit;
+  background: rgba(12, 18, 62, 0.48);
+  backdrop-filter: blur(16px);
+  transition: background 0.25s;
+  z-index: -1;
+}
+/* Windows (left half of hexagon, diagonal "\" cut on right) */
+.dlCard:first-child {
+  clip-path: polygon(18px 0%, calc(100% - 14px) 0%, 100% 100%, 18px 100%, 0% 50%);
+}
+/* macOS (right half of hexagon, diagonal "\" cut on left) */
+.dlCard:last-child {
+  clip-path: polygon(0% 0%, calc(100% - 18px) 0%, 100% 50%, calc(100% - 18px) 100%, 14px 100%);
+}
+.dlCard:hover {
+  filter: drop-shadow(0 0 28px rgb(161 156 227 / 0.73));
+}
+.dlCard:hover::before {
+  background: rgba(34, 46, 120, 0.58);
+}
+.dlCard:hover .dlOsName { color: #ffffff; }
+.dlCard:hover .dlMeta { color: rgba(245, 235, 255, 1); }
+.dlCard:hover .dlOsIcon { color: #ffffff; }
+
+.dlOsIcon { width: 22px; height: 22px; color: rgba(230,215,255,0.95); flex-shrink: 0; transition: color 0.25s; }
+.dlCard:hover .dlOsIcon { color: var(--lavender); }
+
+.dlOsName {
+  font-family: var(--font-display);
+  font-size: 15px; font-weight: 300;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  flex: 1;
+}
+
+.dlMeta {
+  font-family: var(--font-mono);
+  font-size: 9px; letter-spacing: 0.08em;
+  color: rgba(220, 205, 250, 0.85);
+}
+
+.dlExtras {
+  display: flex;
+  gap: 0;
+  width: 78%;
+  align-self: center;
+  filter: drop-shadow(0 2px 10px rgba(90, 55, 200, 0.30));
+}
+.dlExtras > :nth-child(2) {
+  margin-left: -3px;
+}
+
+.dlDocsBtn, .dlCoffeeBtn {
+  position: relative;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 16px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  transition: background 0.22s, color 0.22s, filter 0.22s;
+  overflow: hidden;
+}
+.dlBtnIcon { width: 13px; height: 13px; opacity: 0.65; flex-shrink: 0; transition: opacity 0.2s; }
+.dlDocsBtn:hover .dlBtnIcon, .dlCoffeeBtn:hover .dlBtnIcon { opacity: 0.90; }
+
+/* Docs (left half of trapezoid, diagonal "\" cut on right) */
+.dlDocsBtn {
+  color: var(--lavender);
+  background: rgba(10, 14, 52, 0.42);
+  backdrop-filter: blur(14px);
+  clip-path: polygon(0% 0%, calc(100% - 6px) 0%, 100% 100%, 6px 100%);
+}
+.dlDocsBtn:hover {
+  background: rgb(64 61 150 / 0.55);
+  color: var(--pale);
+  filter: drop-shadow(0 0 14px rgba(110, 140, 255, 0.50));
+}
+
+/* Coffee (right half of trapezoid, diagonal "\" cut on left) */
+.dlCoffeeBtn {
+  color: #f0c878;
+  background: rgba(28, 18, 4, 0.42);
+  backdrop-filter: blur(14px);
+  clip-path: polygon(0% 0%, 100% 0%, calc(100% - 6px) 100%, 6px 100%);
+}
+.dlCoffeeBtn:hover {
+  background: rgb(133 99 48 / 0.55);
+  color: #ffffff;
+  filter: drop-shadow(0 0 14px rgba(180, 130, 40, 0.40));
+}
+
+/* ── Dial ──────────────────────────────────────── */
+.dialWrap {
+  flex-shrink: 0;
+  position: relative;
+  width: 340px;
+  height: 340px;
+}
+
+.dialCircle {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(220, 205, 255, 0.55);
+  backdrop-filter: blur(2px);
+  cursor: grab;
+  touch-action: none;
+}
+.dialCircle:active { cursor: grabbing; }
+
+/* Handle (visual only; pointer events bubble to dialCircle) */
+.dialHandle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Diamonds stacked at handle center */
+.diamond {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(calc(45deg + var(--rot, 0deg)));
+  pointer-events: none;
+}
+.diamondLg {
+  width: 26px;
+  height: 26px;
+  border: 1px solid #ffffff;
+  transition: transform 800ms cubic-bezier(0.33, 1, 0.68, 1);  /* slower */
+}
+.diamondMd {
+  width: 17px;
+  height: 17px;
+  border: 1px solid #ffffff;
+  transition: transform 600ms cubic-bezier(0.33, 1, 0.68, 1);  /* faster */
+}
+.diamondSm {
+  width: 8px;
+  height: 8px;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+/* radial sunburst lines (center → edge) */
+.dialCircle::before {
+  content: '';
+  position: absolute;
+  inset: 6%;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 0deg,
+    rgba(230, 215, 255, 0.25) 0deg 0.7deg,
+    transparent 0.7deg 3deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 65%, black 65%, black 98%, transparent 100%);
+  mask:         radial-gradient(circle, transparent 65%, black 65%, black 98%, transparent 100%);
+  animation: dialRaysSpin 90s linear infinite;
+}
+@keyframes dialRaysSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Responsive ────────────────────────────────── */
+@media (max-width: 960px) {
+  .hero  { padding: 100px 32px 72px; }
+  .inner { flex-direction: column; gap: 52px; text-align: center; }
+  .badge { justify-content: center; }
+  .logo  { margin-left: auto; margin-right: auto; max-width: 320px; }
+  .desc  { margin-left: auto; margin-right: auto; }
+  .ctas  { justify-content: center; }
+  .dialWrap { width: 260px; height: 260px; }
+}

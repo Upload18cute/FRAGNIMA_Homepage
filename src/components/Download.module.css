@@ -1,0 +1,158 @@
+.section {
+  padding: 100px 64px 120px;
+  background: var(--bg);
+  position: relative;
+}
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 1px; height: 56px;
+  background: linear-gradient(to bottom, transparent, rgba(150, 120, 220, 0.35));
+}
+
+.inner { max-width: 720px; margin: 0 auto; text-align: center; }
+
+/* Header */
+.header { margin-bottom: 52px; }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.eyebrowLine  { flex: 0 0 28px; height: 1px; background: rgba(150,120,220,0.45); }
+.eyebrowDiam  { width: 5px; height: 5px; background: var(--purple); transform: rotate(45deg); }
+.eyebrowText  { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--purple); }
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.5vw, 38px);
+  font-weight: 300;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-1);
+  margin-bottom: 10px;
+}
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+}
+
+/* Platform cards — Arcaea song-list horizontal style */
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); margin-bottom: 1px; }
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26px 30px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(16px);
+  color: var(--text-1);
+  overflow: hidden;
+  transition: background 0.3s;
+  clip-path: polygon(var(--cut-lg) 0%, 100% 0%, 100% 100%, 0% 100%, 0% var(--cut-lg));
+}
+/* top-left bright edge */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 55%; height: 1px;
+  background: linear-gradient(90deg, rgba(150,120,220,0.45), transparent);
+}
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 1px; height: 55%;
+  background: linear-gradient(to bottom, rgba(150,120,220,0.45), transparent);
+}
+.card:hover { background: var(--bg-panel-h); }
+.card:hover::before { background: linear-gradient(90deg, rgba(180,150,255,0.65), transparent); }
+
+.platform { display: flex; align-items: center; gap: 14px; }
+
+.osIcon { width: 28px; height: 28px; color: var(--text-2); flex-shrink: 0; transition: color 0.3s; }
+.card:hover .osIcon { color: var(--lavender); }
+
+.osName {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.meta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.metaLabel { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.08em; color: var(--text-3); }
+
+/* Download arrow — diamond shaped */
+.dlArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  background: rgba(100, 70, 170, 0.12);
+  border-top:    1px solid rgba(150, 120, 220, 0.4);
+  border-left:   1px solid rgba(150, 120, 220, 0.4);
+  border-bottom: 1px solid rgba(100, 80, 160, 0.08);
+  border-right:  1px solid rgba(100, 80, 160, 0.08);
+  color: var(--lavender);
+  font-size: 13px;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  transition: all 0.25s;
+}
+.card:hover .dlArrow {
+  background: rgba(120, 85, 200, 0.25);
+  box-shadow: 0 0 14px rgba(150, 100, 255, 0.3);
+}
+
+/* Extras — pointed hexagon buttons (Arcaea style) */
+.extras {
+  display: flex;
+  gap: 1px;
+  background: var(--border);
+  margin-bottom: 28px;
+}
+
+.docsBtn, .coffeeBtn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--bg-panel);
+  backdrop-filter: blur(14px);
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: all 0.25s;
+}
+.docsBtn { color: var(--text-2); }
+.docsBtn:hover { background: var(--bg-panel-h); color: var(--pale); }
+
+.btnIcon { width: 14px; height: 14px; opacity: 0.55; }
+
+.coffeeBtn { color: #b89040; background: rgba(25, 18, 5, 0.65); }
+.coffeeBtn:hover { background: rgba(35, 26, 8, 0.82); color: #d4a850; }
+
+/* Note */
+.note { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.06em; color: var(--text-3); line-height: 1.7; }
+.link { color: var(--purple); text-decoration: underline; text-underline-offset: 3px; opacity: 0.8; }
+.link:hover { opacity: 1; }
+
+@media (max-width: 600px) {
+  .section { padding: 80px 24px; }
+  .cards { grid-template-columns: 1fr; }
+  .extras { flex-direction: column; }
+}

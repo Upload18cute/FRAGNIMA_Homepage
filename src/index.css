@@ -1,0 +1,42 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #130b22;
+  --bg-panel:   rgba(48, 30, 100, 0.70);
+  --bg-panel-h: rgba(62, 40, 125, 0.78);
+  --border:     rgba(175, 145, 245, 0.30);
+  --border-b:   rgba(215, 195, 255, 0.55);
+
+  --purple:     #b090f0;
+  --lavender:   #d8c8fa;
+  --pale: #ffffff;
+  --white:      #f6f2fe;
+
+  --text-1: #e6dfff;
+  --text-2:     #b8aad8;
+  --text-3:     #806898;
+
+  --glow-p:    0 0 28px rgba(120, 80, 210, 0.30);
+  --glow-p-lg: 0 0 60px rgba(120, 80, 210, 0.40);
+
+  --font-display: 'Josefin Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+  --font-body:    'Inter', sans-serif;
+
+  --cut:    12px;
+  --cut-lg: 18px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text-1);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; outline: none; font-family: inherit; }
